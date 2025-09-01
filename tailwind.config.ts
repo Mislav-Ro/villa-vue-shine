@@ -52,6 +52,16 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Villa-specific colors
+				villa: {
+					ocean: 'hsl(var(--villa-ocean))',
+					'ocean-light': 'hsl(var(--villa-ocean-light))',
+					sand: 'hsl(var(--villa-sand))',
+					'sand-dark': 'hsl(var(--villa-sand-dark))',
+					cream: 'hsl(var(--villa-cream))',
+					gold: 'hsl(var(--villa-gold))',
+					'gold-dark': 'hsl(var(--villa-gold-dark))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -67,6 +77,16 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-ocean': 'var(--gradient-ocean)',
+				'gradient-sand': 'var(--gradient-sand)',
+			},
+			boxShadow: {
+				'villa': 'var(--shadow-villa)',
+				'card': 'var(--shadow-card)',
+				'gold': 'var(--shadow-gold)',
 			},
 			keyframes: {
 				'accordion-down': {
