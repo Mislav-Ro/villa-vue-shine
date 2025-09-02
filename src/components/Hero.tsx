@@ -24,18 +24,18 @@ const Hero = () => {
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
           Villa
-          <span className="block text-villa-gold">Serenity</span>
+          <span className="block text-villa-gold">Esquel</span>
         </h1>
         
         <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
-          Escape to paradise in our stunning Mediterranean villa with breathtaking ocean views, 
-          infinity pool, and world-class amenities.
+          Escape to paradise in our stunning Croatian villa with breathtaking sea views, 
+          outdoor pool, and world-class amenities.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <div className="flex items-center gap-2 text-white/80">
             <MapPin className="w-5 h-5" />
-            <span className="text-lg">Costa del Sol, Spain</span>
+            <span className="text-lg">Uvala Stivasnica, Croatia</span>
           </div>
           <div className="hidden sm:block w-px h-6 bg-white/30" />
           <div className="text-lg font-semibold text-villa-gold">€450/night</div>

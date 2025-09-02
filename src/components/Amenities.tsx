@@ -17,8 +17,8 @@ import {
 const amenities = [
   {
     icon: Waves,
-    title: "Infinity Pool",
-    description: "Stunning infinity pool with ocean views"
+    title: "Outdoor Pool",
+    description: "Beautiful outdoor pool with sea views"
   },
   {
     icon: Wifi,
@@ -65,18 +65,13 @@ const amenities = [
 const specs = [
   {
     icon: Users,
-    title: "8 Guests",
-    description: "Sleeps up to 8 guests comfortably"
+    title: "6 Guests",
+    description: "Sleeps up to 6 guests comfortably"
   },
   {
     icon: Bed,
-    title: "4 Bedrooms",
+    title: "3 Bedrooms",
     description: "All with en-suite bathrooms"
-  },
-  {
-    icon: Bath,
-    title: "5 Bathrooms",
-    description: "Including powder room"
   }
 ];
 
@@ -94,7 +89,7 @@ const Amenities = () => {
         </div>
 
         {/* Villa Specifications */}
-        <div className="grid md:grid-cols-3 gap-6 mb-16 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 mb-16 max-w-3xl mx-auto">
           {specs.map((spec, index) => (
             <Card key={index} className="shadow-card text-center">
               <CardContent className="p-8">
@@ -135,8 +130,8 @@ const Amenities = () => {
                 Ready for Your Perfect Getaway?
               </h3>
               <p className="text-muted-foreground mb-6">
-                Experience luxury, comfort, and breathtaking views at Villa Serenity. 
-                Your Mediterranean escape awaits.
+                Experience luxury, comfort, and breathtaking views at Villa Esquel. 
+                Your Croatian escape awaits.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a 
