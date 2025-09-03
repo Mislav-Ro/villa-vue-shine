@@ -46,11 +46,6 @@ const amenities = [
     description: "Smart TVs and sound system"
   },
   {
-    icon: Dumbbell,
-    title: "Fitness Area",
-    description: "Private gym with ocean views"
-  },
-  {
     icon: Trees,
     title: "Garden Terrace",
     description: "Landscaped gardens and outdoor dining"

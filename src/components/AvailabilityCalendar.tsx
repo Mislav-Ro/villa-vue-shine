@@ -154,11 +154,6 @@ const AvailabilityCalendar = () => {
               Loading availability from Booking.com and Airbnb...
             </p>
           )}
-          {!isLoading && (
-            <p className="text-sm text-muted-foreground mt-2">
-              Showing {bookedDates.length} blocked dates from booking platforms
-            </p>
-          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">

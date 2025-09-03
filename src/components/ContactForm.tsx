@@ -99,7 +99,7 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+34 123 456 789</p>
+                    <p className="text-muted-foreground">+385 91 4177 971</p>
                   </div>
                 </div>
               </CardContent>
@@ -113,7 +113,7 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">Email</h3>
-                    <p className="text-muted-foreground">info@villaserenity.com</p>
+                    <p className="text-muted-foreground">mislavrogulj@gmail.com</p>
                   </div>
                 </div>
               </CardContent>
@@ -127,7 +127,7 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">Location</h3>
-                    <p className="text-muted-foreground">Costa del Sol, Marbella, Spain</p>
+                    <p className="text-muted-foreground">Uvala Stivasnica, 100e, Croatia</p>
                   </div>
                 </div>
               </CardContent>
