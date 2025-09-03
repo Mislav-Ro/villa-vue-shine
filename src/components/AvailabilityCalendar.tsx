@@ -32,35 +32,78 @@ const AvailabilityCalendar = () => {
   useEffect(() => {
     const fetchICalData = async () => {
       try {
-        const allBookedDates: Date[] = [];
+        const blockedDatesSet = new Set<string>();
         
         for (const source of ICAL_SOURCES) {
           try {
-            const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(source.url)}`);
-            const icalData = await response.text();
+            console.log(`Fetching ${source.name} calendar...`);
             
-            const jcalData = ICAL.parse(icalData);
-            const comp = new ICAL.Component(jcalData);
-            const vevents = comp.getAllSubcomponents('vevent');
+            // Try multiple CORS proxies
+            const proxies = [
+              `https://api.allorigins.win/raw?url=${encodeURIComponent(source.url)}`,
+              `https://cors-anywhere.herokuapp.com/${source.url}`,
+              source.url // Direct attempt (might work in some cases)
+            ];
             
-            vevents.forEach(vevent => {
-              const event = new ICAL.Event(vevent);
-              const startDate = event.startDate.toJSDate();
-              const endDate = event.endDate.toJSDate();
-              
-              // Add all dates from start to end (excluding end date)
-              let currentDate = new Date(startDate);
-              while (currentDate < endDate) {
-                allBookedDates.push(new Date(currentDate));
-                currentDate.setDate(currentDate.getDate() + 1);
+            let icalData = '';
+            let success = false;
+            
+            for (const proxyUrl of proxies) {
+              try {
+                const response = await fetch(proxyUrl, {
+                  headers: source.url.includes('booking.com') ? {} : { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                
+                if (response.ok) {
+                  icalData = await response.text();
+                  console.log(`Successfully fetched ${source.name} data via proxy`);
+                  success = true;
+                  break;
+                }
+              } catch (proxyError) {
+                console.log(`Proxy ${proxyUrl} failed, trying next...`);
               }
-            });
+            }
+            
+            if (!success) {
+              console.warn(`Failed to fetch ${source.name} calendar from all proxies`);
+              continue;
+            }
+            
+            // Parse iCal data
+            if (icalData && icalData.includes('BEGIN:VCALENDAR')) {
+              const jcalData = ICAL.parse(icalData);
+              const comp = new ICAL.Component(jcalData);
+              const vevents = comp.getAllSubcomponents('vevent');
+              
+              console.log(`Found ${vevents.length} events in ${source.name} calendar`);
+              
+              vevents.forEach(vevent => {
+                const event = new ICAL.Event(vevent);
+                const startDate = event.startDate.toJSDate();
+                const endDate = event.endDate.toJSDate();
+                
+                console.log(`${source.name} booking: ${startDate.toISOString().split('T')[0]} to ${endDate.toISOString().split('T')[0]}`);
+                
+                // Add all dates from start to end (excluding end date)
+                let currentDate = new Date(startDate);
+                while (currentDate < endDate) {
+                  const dateString = currentDate.toISOString().split('T')[0];
+                  blockedDatesSet.add(dateString);
+                  currentDate.setDate(currentDate.getDate() + 1);
+                }
+              });
+            }
           } catch (error) {
-            console.error(`Error fetching ${source.name} calendar:`, error);
+            console.error(`Error processing ${source.name} calendar:`, error);
           }
         }
         
-        setBookedDates(allBookedDates);
+        // Convert Set to Array of Date objects
+        const blockedDatesArray = Array.from(blockedDatesSet).map(dateString => new Date(dateString));
+        console.log(`Total blocked dates: ${blockedDatesArray.length}`, blockedDatesArray.map(d => d.toISOString().split('T')[0]));
+        
+        setBookedDates(blockedDatesArray);
       } catch (error) {
         console.error('Error processing iCal data:', error);
       } finally {
@@ -106,6 +149,16 @@ const AvailabilityCalendar = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Select your preferred dates and see real-time availability for your perfect getaway.
           </p>
+          {isLoading && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Loading availability from Booking.com and Airbnb...
+            </p>
+          )}
+          {!isLoading && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Showing {bookedDates.length} blocked dates from booking platforms
+            </p>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
