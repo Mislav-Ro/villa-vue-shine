@@ -40,11 +40,11 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <a 
-                href="tel:+34123456789" 
+                href="tel:+385914177971" 
                 className="flex items-center gap-1 hover:text-villa-ocean transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +34 123 456 789
+                +385 91 4177 971
               </a>
               <a 
                 href="mailto:info@villaserenity.com" 
