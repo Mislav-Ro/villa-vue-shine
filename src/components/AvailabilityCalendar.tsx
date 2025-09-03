@@ -1,28 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarDays, Users, Euro } from "lucide-react";
 import { addDays, format, differenceInDays } from "date-fns";
+import ICAL from "ical.js";
+
+const ICAL_SOURCES = [
+  {
+    name: 'Booking.com',
+    url: 'https://ical.booking.com/v1/export?t=af103c92-e046-4e15-88de-d565f430045f'
+  },
+  {
+    name: 'Airbnb',
+    url: 'https://www.airbnb.com/calendar/ical/33287681.ics?s=d62b44bb665593bb511faaf0f880fcd0'
+  }
+];
 
 const AvailabilityCalendar = () => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(2);
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const pricePerNight = 450;
   const nights = checkIn && checkOut ? differenceInDays(checkOut, checkIn) : 0;
   const totalPrice = nights * pricePerNight;
 
-  // Disable past dates and some random booked dates for demo
-  const disabledDates = [
-    new Date(2024, 2, 15),
-    new Date(2024, 2, 16),
-    new Date(2024, 2, 20),
-    new Date(2024, 3, 5),
-    new Date(2024, 3, 6),
-    new Date(2024, 3, 7),
-  ];
+  // Fetch and parse iCal data
+  useEffect(() => {
+    const fetchICalData = async () => {
+      try {
+        const allBookedDates: Date[] = [];
+        
+        for (const source of ICAL_SOURCES) {
+          try {
+            const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(source.url)}`);
+            const icalData = await response.text();
+            
+            const jcalData = ICAL.parse(icalData);
+            const comp = new ICAL.Component(jcalData);
+            const vevents = comp.getAllSubcomponents('vevent');
+            
+            vevents.forEach(vevent => {
+              const event = new ICAL.Event(vevent);
+              const startDate = event.startDate.toJSDate();
+              const endDate = event.endDate.toJSDate();
+              
+              // Add all dates from start to end (excluding end date)
+              let currentDate = new Date(startDate);
+              while (currentDate < endDate) {
+                allBookedDates.push(new Date(currentDate));
+                currentDate.setDate(currentDate.getDate() + 1);
+              }
+            });
+          } catch (error) {
+            console.error(`Error fetching ${source.name} calendar:`, error);
+          }
+        }
+        
+        setBookedDates(allBookedDates);
+      } catch (error) {
+        console.error('Error processing iCal data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchICalData();
+  }, []);
 
   const isDateDisabled = (date: Date) => {
     const today = new Date();
@@ -30,8 +77,8 @@ const AvailabilityCalendar = () => {
     
     if (date < today) return true;
     
-    return disabledDates.some(disabledDate => 
-      date.toDateString() === disabledDate.toDateString()
+    return bookedDates.some(bookedDate => 
+      date.toDateString() === bookedDate.toDateString()
     );
   };
 
@@ -79,7 +126,7 @@ const AvailabilityCalendar = () => {
                   disabled={isDateDisabled}
                   className="w-full pointer-events-auto"
                   modifiers={{
-                    booked: disabledDates,
+                    booked: bookedDates,
                     checkIn: checkIn ? [checkIn] : [],
                     checkOut: checkOut ? [checkOut] : [],
                     range: checkIn && checkOut ? 
