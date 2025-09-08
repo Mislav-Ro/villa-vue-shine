@@ -98,7 +98,7 @@ const ContactForm = () => {
                     <Phone className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Phone</h3>
+                    <h3 className="font-semibold text-foreground">Phone (WhatsApp)</h3>
                     <p className="text-muted-foreground">+385 91 4177 971</p>
                   </div>
                 </div>

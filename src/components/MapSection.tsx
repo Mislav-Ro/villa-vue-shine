@@ -59,7 +59,7 @@ const MapSection = () => {
                   </div>
                   <div>
                     <p className="font-medium">Split Old Town</p>
-                    <p className="text-sm text-muted-foreground">25 min drive</p>
+                    <p className="text-sm text-muted-foreground">60 min drive</p>
                   </div>
                 </div>
 
