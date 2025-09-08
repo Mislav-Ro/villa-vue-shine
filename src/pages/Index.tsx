@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Gallery from "@/components/Gallery";
 import Amenities from "@/components/Amenities";
-import AvailabilityCalendar from "@/components/AvailabilityCalendar";
 import MapSection from "@/components/MapSection";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
@@ -23,10 +22,6 @@ const Index = () => {
         
         <section id="amenities">
           <Amenities />
-        </section>
-        
-        <section id="availability">
-          <AvailabilityCalendar />
         </section>
         
         <section id="contact">
