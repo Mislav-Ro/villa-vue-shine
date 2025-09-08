@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
+import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-foreground text-background py-16">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Villa Info */}
           <div>
             <h3 className="text-2xl font-bold text-villa-gold mb-4">Villa Esquel</h3>
@@ -20,16 +20,10 @@ const Footer = () => {
                 <Instagram className="w-5 h-5 text-white" />
               </a>
               <a 
-                href="#" 
+                href="https://www.facebook.com/VillaEsquel/" 
                 className="w-10 h-10 bg-villa-ocean rounded-full flex items-center justify-center hover:bg-villa-ocean-light transition-colors"
               >
                 <Facebook className="w-5 h-5 text-white" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 bg-villa-ocean rounded-full flex items-center justify-center hover:bg-villa-ocean-light transition-colors"
-              >
-                <Twitter className="w-5 h-5 text-white" />
               </a>
             </div>
           </div>
@@ -68,23 +62,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-villa-gold">Stay Updated</h4>
-            <p className="text-background/80 mb-4 text-sm">
-              Subscribe to receive special offers and updates about Villa Esquel.
-            </p>
-            <div className="space-y-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-3 py-2 bg-background/10 border border-background/20 rounded-md text-background placeholder-background/60 focus:outline-none focus:border-villa-ocean"
-              />
-              <button className="w-full bg-villa-ocean hover:bg-villa-ocean-light text-white py-2 rounded-md transition-colors">
-                Subscribe
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="border-t border-background/20 mt-12 pt-8 text-center">

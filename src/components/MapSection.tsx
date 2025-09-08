@@ -68,7 +68,7 @@ const MapSection = () => {
                     <Car className="w-4 h-4 text-villa-ocean" />
                   </div>
                   <div>
-                    <p className="font-medium">Makarska</p>
+                    <p className="font-medium">Primošten</p>
                     <p className="text-sm text-muted-foreground">15 min drive</p>
                   </div>
                 </div>
