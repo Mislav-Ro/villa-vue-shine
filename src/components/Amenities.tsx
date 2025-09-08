@@ -116,35 +116,6 @@ const Amenities = () => {
             </Card>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <Card className="max-w-2xl mx-auto shadow-villa">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                Ready for Your Perfect Getaway?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Experience luxury, comfort, and breathtaking views at Villa Esquel. 
-                Your Croatian escape awaits.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="#availability" 
-                  className="inline-flex items-center justify-center px-6 py-3 bg-villa-ocean hover:bg-villa-ocean-light text-white rounded-md font-medium transition-colors shadow-villa"
-                >
-                  Check Availability
-                </a>
-                <a 
-                  href="#contact" 
-                  className="inline-flex items-center justify-center px-6 py-3 border-2 border-villa-ocean text-villa-ocean hover:bg-villa-ocean hover:text-white rounded-md font-medium transition-colors"
-                >
-                  Contact Us
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </section>
   );
