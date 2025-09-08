@@ -29,12 +29,12 @@ const Index = () => {
           <AvailabilityCalendar />
         </section>
         
-        <section id="location">
-          <MapSection />
-        </section>
-        
         <section id="contact">
           <ContactForm />
+        </section>
+        
+        <section id="location">
+          <MapSection />
         </section>
       </main>
       
