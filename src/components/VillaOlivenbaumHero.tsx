@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Star } from "lucide-react";
-import heroImage from "@/assets/villa-esquel/villa-hero.jpg";
+import heroImage from "@/assets/villa-esquel/villa-hero.jpg"; // Using same image for now
 
-const Hero = () => {
+const VillaOlivenbaumHero = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -24,18 +24,18 @@ const Hero = () => {
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
           Villa
-          <span className="block text-villa-gold">Esquel</span>
+          <span className="block text-villa-gold">Olivenbaum</span>
         </h1>
         
         <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
-          Escape to paradise in our stunning Croatian villa with breathtaking sea views, 
-          outdoor pool, and world-class amenities.
+          Experience tranquility in our beautiful Croatian villa with stunning views, 
+          outdoor amenities, and exceptional comfort.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <div className="flex items-center gap-2 text-white/80">
             <MapPin className="w-5 h-5" />
-            <span className="text-lg">Uvala Stivasnica, Croatia</span>
+            <span className="text-lg">Kaštel Štafilić, Croatia</span>
           </div>
         </div>
         
@@ -69,4 +69,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default VillaOlivenbaumHero;

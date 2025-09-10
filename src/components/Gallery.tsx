@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import villaExterior from "@/assets/villa-exterior.jpg";
-import villaBedroom from "@/assets/villa-bedroom.jpg";
-import villaKitchen from "@/assets/villa-kitchen.jpg";
-import heroImage from "@/assets/villa-hero.jpg";
+import villaExterior from "@/assets/villa-esquel/villa-exterior.jpg";
+import villaBedroom from "@/assets/villa-esquel/villa-bedroom.jpg";
+import villaKitchen from "@/assets/villa-esquel/villa-kitchen.jpg";
+import heroImage from "@/assets/villa-esquel/villa-hero.jpg";
 
 const images = [
   { src: heroImage, alt: "Villa with infinity pool and ocean view" },
@@ -66,8 +66,8 @@ const Gallery = () => {
               <DialogContent className="max-w-4xl p-0 bg-transparent border-none">
                 <div className="relative">
                   <img
-                    src={image.src}
-                    alt={image.alt}
+                    src={selectedImage !== null ? images[selectedImage].src : image.src}
+                    alt={selectedImage !== null ? images[selectedImage].alt : image.alt}
                     className="w-full h-auto rounded-lg"
                   />
                   
@@ -88,7 +88,7 @@ const Gallery = () => {
                   
                   {/* Counter */}
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                    {index + 1} / {images.length}
+                    {selectedImage !== null ? selectedImage + 1 : index + 1} / {images.length}
                   </div>
                 </div>
               </DialogContent>
