@@ -7,6 +7,39 @@ const Hero = () => {
   const [heroImage, setHeroImage] = useState<string>('');
   const currentProperty = useCurrentProperty();
 
+  const getPropertyTitle = () => {
+    switch (currentProperty) {
+      case 'villa-olivenbaum':
+        return { main: 'Villa', highlight: 'Olivenbaum' };
+      case 'alida-valli':
+        return { main: 'Alida Valli', highlight: 'Apartment' };
+      default:
+        return { main: 'Villa', highlight: 'Esquel' };
+    }
+  };
+
+  const getPropertyDescription = () => {
+    switch (currentProperty) {
+      case 'villa-olivenbaum':
+        return 'Experience luxury in our beautiful Croatian villa with stunning views, private pool, and exceptional amenities.';
+      case 'alida-valli':
+        return 'Enjoy comfort and style in our modern Croatian apartment with beautiful views and premium amenities.';
+      default:
+        return 'Escape to paradise in our stunning Croatian villa with breathtaking sea views, outdoor pool, and world-class amenities.';
+    }
+  };
+
+  const getPropertyLocation = () => {
+    switch (currentProperty) {
+      case 'villa-olivenbaum':
+        return 'Crvena zemlja 43, Kaštel Štafilić, Croatia';
+      case 'alida-valli':
+        return 'Iločka ul. 14, 21217, Kaštel Stari, Croatia';
+      default:
+        return 'Uvala Stivasnica, Croatia';
+    }
+  };
+
   useEffect(() => {
     const loadHeroImage = async () => {
       try {
@@ -42,19 +75,18 @@ const Hero = () => {
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          Villa
-          <span className="block text-villa-gold">Esquel</span>
+          {getPropertyTitle().main}
+          <span className="block text-villa-gold">{getPropertyTitle().highlight}</span>
         </h1>
         
         <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
-          Escape to paradise in our stunning Croatian villa with breathtaking sea views, 
-          outdoor pool, and world-class amenities.
+          {getPropertyDescription()}
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <div className="flex items-center gap-2 text-white/80">
             <MapPin className="w-5 h-5" />
-            <span className="text-lg">Uvala Stivasnica, Croatia</span>
+            <span className="text-lg">{getPropertyLocation()}</span>
           </div>
         </div>
         
