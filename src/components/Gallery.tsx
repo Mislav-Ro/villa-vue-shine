@@ -1,21 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import villaExterior from "@/assets/villa-esquel/villa-exterior.jpg";
-import villaBedroom from "@/assets/villa-esquel/villa-bedroom.jpg";
-import villaKitchen from "@/assets/villa-esquel/villa-kitchen.jpg";
-import heroImage from "@/assets/villa-esquel/villa-hero.jpg";
+import { useCurrentProperty, getPropertyImages } from "@/utils/propertyUtils";
 
-const images = [
-  { src: heroImage, alt: "Villa with infinity pool and ocean view" },
-  { src: villaExterior, alt: "Modern villa exterior" },
-  { src: villaBedroom, alt: "Luxurious bedroom with ocean view" },
-  { src: villaKitchen, alt: "Modern kitchen with marble countertops" },
-];
+interface GalleryImage {
+  src: string;
+  alt: string;
+}
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const currentProperty = useCurrentProperty();
+
+  useEffect(() => {
+    const loadGalleryImages = async () => {
+      try {
+        const propertyImages = await getPropertyImages(currentProperty);
+        
+        // Create gallery images array from all loaded images except hero
+        const galleryImagesList: GalleryImage[] = [];
+        
+        // Define image mappings with alt text
+        const imageConfigs = [
+          { key: 'villa-exterior', alt: 'Modern villa exterior' },
+          { key: 'villa-bedroom', alt: 'Luxurious bedroom with ocean view' },
+          { key: 'villa-kitchen', alt: 'Modern kitchen with marble countertops' },
+          { key: 'olivenbaum-exterior', alt: 'Villa Olivenbaum exterior view' },
+          { key: 'olivenbaum-bedroom', alt: 'Villa Olivenbaum bedroom' },
+          { key: 'olivenbaum-kitchen', alt: 'Villa Olivenbaum kitchen' },
+          { key: 'alida-exterior', alt: 'Alida Valli apartment exterior' },
+          { key: 'alida-bedroom', alt: 'Alida Valli apartment bedroom' },
+          { key: 'alida-bathroom', alt: 'Alida Valli apartment bathroom' }
+        ];
+
+        // Hero image
+        if (propertyImages['villa-hero']) {
+          galleryImagesList.push({
+            src: propertyImages['villa-hero'],
+            alt: `${currentProperty.replace('-', ' ')} with stunning views`
+          });
+        }
+
+        // Add other images
+        imageConfigs.forEach(config => {
+          if (propertyImages[config.key]) {
+            galleryImagesList.push({
+              src: propertyImages[config.key],
+              alt: config.alt
+            });
+          }
+        });
+
+        setImages(galleryImagesList);
+      } catch (error) {
+        console.error('Error loading gallery images:', error);
+        // Set empty array as fallback
+        setImages([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadGalleryImages();
+  }, [currentProperty]);
 
   const nextImage = () => {
     if (selectedImage !== null) {
@@ -28,6 +78,21 @@ const Gallery = () => {
       setSelectedImage((selectedImage - 1 + images.length) % images.length);
     }
   };
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-gradient-sand">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Villa Gallery
+            </h2>
+            <p className="text-muted-foreground">Loading gallery images...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-gradient-sand">
@@ -42,7 +107,12 @@ const Gallery = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {images.length === 0 ? (
+          <div className="text-center text-muted-foreground">
+            No gallery images available for this property.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {images.map((image, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
@@ -93,8 +163,9 @@ const Gallery = () => {
                 </div>
               </DialogContent>
             </Dialog>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
