@@ -1,8 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Star } from "lucide-react";
-import heroImage from "@/assets/villa-esquel/villa-hero.jpg"; // Using same image for now
+import { useState, useEffect } from "react";
+import { useCurrentProperty, getPropertyImages } from "@/utils/propertyUtils";
 
 const AlidaValliHero = () => {
+  const [heroImage, setHeroImage] = useState<string>('');
+  const currentProperty = useCurrentProperty();
+
+  useEffect(() => {
+    const loadHeroImage = async () => {
+      try {
+        const images = await getPropertyImages(currentProperty);
+        if (images['villa-hero']) setHeroImage(images['villa-hero']);
+      } catch (error) {
+        console.error('Error loading hero image:', error);
+      }
+    };
+    loadHeroImage();
+  }, [currentProperty]);
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}

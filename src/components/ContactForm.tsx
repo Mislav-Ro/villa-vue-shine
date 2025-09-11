@@ -9,17 +9,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Send, Phone, Mail, MapPin, CalendarDays } from "lucide-react";
 import { addDays, format, differenceInDays } from "date-fns";
 import ICAL from "ical.js";
+import { useCurrentProperty, getICalSources } from "@/utils/propertyUtils";
 
-const ICAL_SOURCES = [{
-  name: 'Booking.com',
-  url: 'https://ical.booking.com/v1/export?t=af103c92-e046-4e15-88de-d565f430045f'
-}, {
-  name: 'Airbnb',
-  url: 'https://www.airbnb.com/calendar/ical/33287681.ics?s=d62b44bb665593bb511faaf0f880fcd0'
-}];
 
 const ContactForm = () => {
   const { toast } = useToast();
+  const currentProperty = useCurrentProperty();
+  const icalSources = getICalSources(currentProperty);
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
@@ -41,7 +37,7 @@ const ContactForm = () => {
     const fetchICalData = async () => {
       try {
         const blockedDatesSet = new Set<string>();
-        for (const source of ICAL_SOURCES) {
+        for (const source of icalSources) {
           try {
             console.log(`Fetching ${source.name} calendar...`);
 
@@ -109,7 +105,7 @@ const ContactForm = () => {
       }
     };
     fetchICalData();
-  }, []);
+  }, [currentProperty]);
 
   const isDateDisabled = (date: Date) => {
     const today = new Date();
